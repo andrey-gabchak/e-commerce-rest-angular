@@ -1,9 +1,6 @@
 package com.gabchak.model;
 
-import com.gabchak.controller.external.model.ProductDto;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PRODUCTS")
@@ -12,7 +9,6 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
     @Column(name = "NAME")
     private String name;
     @Column(name = "PRICE")
@@ -23,18 +19,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
-    public Product() {
-    }
-
-    public static Product of(ProductDto productDto) {
-        Product product = new Product();
-        product.setId(productDto.getId());
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setDescription(productDto.getDescription());
-        product.setCategory(productDto.getCategory());
-        return product;
-    }
 
     public Long getId() {
         return id;
