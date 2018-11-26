@@ -1,7 +1,6 @@
 package com.gabchak.controller.rest;
 
 import com.gabchak.controller.external.model.UserDto;
-import com.gabchak.model.User;
 import com.gabchak.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
