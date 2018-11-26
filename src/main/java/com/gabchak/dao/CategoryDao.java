@@ -3,6 +3,7 @@ package com.gabchak.dao;
 import com.gabchak.model.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryDao {
 
@@ -16,7 +17,7 @@ public interface CategoryDao {
 
     Category findByName(String name);
 
-    List<Category> findAll();
+    Optional<List<Category>> findAll();
 
     void deleteById(Long id);
 

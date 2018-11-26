@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -21,9 +22,9 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public List<Category> findAll() {
-        return sessionFactory.getCurrentSession().createNativeQuery("SELECT ID, CATEGORY_NAME FROM CATEGORIES",
-                Category.class).list();
+    public Optional<List<Category>> findAll() {
+        return Optional.ofNullable(sessionFactory.getCurrentSession().createNativeQuery("SELECT ID, CATEGORY_NAME FROM CATEGORIES",
+                Category.class).list());
     }
 
     @Override

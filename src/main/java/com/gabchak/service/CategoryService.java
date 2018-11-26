@@ -3,6 +3,7 @@ package com.gabchak.service;
 import com.gabchak.model.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryService {
 
@@ -16,7 +17,7 @@ public interface CategoryService {
 
     Category findByName(String name);
 
-    List<Category> findAll();
+    Optional<List<Category>> findAll();
 
     void deleteById(Long id);
 }
