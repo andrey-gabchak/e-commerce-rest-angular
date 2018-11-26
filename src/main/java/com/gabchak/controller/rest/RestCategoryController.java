@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,5 +35,12 @@ public class RestCategoryController {
             collect = categoryService.findAll().get().stream().map(CategoryDto::of).collect(toList());
         }
         return new ResponseEntity<>(collect, HttpStatus.NOT_FOUND);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/rest/{categoryId}")
+    public ResponseEntity<CategoryDto> findById(@PathVariable Long categoryId) {
+        CategoryDto category = categoryService.findById(categoryId).map(CategoryDto::of).orElse(new CategoryDto());
+        return new ResponseEntity<>(category, HttpStatus.NOT_FOUND);
     }
 }
