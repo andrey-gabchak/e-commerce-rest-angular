@@ -1,13 +1,16 @@
 package com.gabchak.dao;
 
 import com.gabchak.model.Category;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class CategoryDaoImpl implements CategoryDao {
 
     private SessionFactory sessionFactory;
@@ -53,12 +56,14 @@ public class CategoryDaoImpl implements CategoryDao {
     public Category findByName(String name) {
         return sessionFactory.getCurrentSession()
                 .createQuery("from category where name =:name", Category.class)
-                .setParameter("NAME", name)
+                .setParameter("name", name)
                 .uniqueResult();
     }
 
     @Override
     public void deleteById(Long id) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(currentSession.load(Category.class, id));
+        currentSession.flush();
     }
 }
