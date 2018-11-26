@@ -5,6 +5,7 @@ import com.gabchak.model.Product;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategoryDto {
     private String categoryName;
@@ -14,6 +15,12 @@ public class CategoryDto {
     }
 
     public CategoryDto() {
+    }
+
+    public static List<CategoryDto> of(List<Category> categories) {
+        return categories.stream()
+                .map(CategoryDto::of)
+                .collect(Collectors.toList());
     }
 
     public static CategoryDto of(Category category) {

@@ -29,12 +29,10 @@ public class RestCategoryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/rest/categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
-        List<CategoryDto> collect = null;
-
-        if (categoryService.findAll().isPresent()) {
-            collect = categoryService.findAll().get().stream().map(CategoryDto::of).collect(toList());
-        }
-        return new ResponseEntity<>(collect, HttpStatus.NOT_FOUND);
+        return categoryService.findAll()
+                .map(CategoryDto::of)
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
