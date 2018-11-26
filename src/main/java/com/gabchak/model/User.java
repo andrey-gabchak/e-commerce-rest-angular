@@ -2,20 +2,32 @@ package com.gabchak.model;
 
 import com.gabchak.controller.external.model.RegisterUserDto;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "USERS")
 public class User {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(name = "EMAIL")
     private String email;
     @NotNull
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "FIRST_NAME")
     private String firstName;
+    @Column(name = "LAST_NAME")
     private String lastName;
+    @Column(name = "TOKEN")
     private String token;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users") //имя Set поля в Role.class
+    private Set<Role> roles = new HashSet<>();
 
     public User(Long id, String email, String password, String firstName, String lastName, String token) {
         this.id = id;
@@ -92,4 +104,15 @@ public class User {
         return token;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
 }
