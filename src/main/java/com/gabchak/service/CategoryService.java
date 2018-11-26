@@ -11,7 +11,7 @@ public interface CategoryService {
 
     void update(Category category);
 
-    Category findById(Long id);
+    Optional<Category> findById(Long id);
 
     Category findByIdWithProductList(Long id);
 

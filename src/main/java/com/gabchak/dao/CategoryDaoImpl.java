@@ -46,17 +46,17 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category findById(Long id) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("from category where id =:id", Category.class)
-                .setParameter("ID", id)
-                .uniqueResult();
+    public Optional<Category> findById(Long id) {
+        return Optional.ofNullable(sessionFactory.getCurrentSession()
+                .createQuery("from Category where id =:id", Category.class)
+                .setParameter("id", id)
+                .uniqueResult());
     }
 
     @Override
     public Category findByName(String name) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from category where name =:name", Category.class)
+                .createQuery("from Category where categoryName =:name", Category.class)
                 .setParameter("name", name)
                 .uniqueResult();
     }
