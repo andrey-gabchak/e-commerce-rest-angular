@@ -1,5 +1,8 @@
 package com.gabchak.controller.external.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gabchak.model.User;
+
 import javax.validation.constraints.NotNull;
 
 public class UserDto {
@@ -7,19 +10,14 @@ public class UserDto {
     @NotNull
     private String email;
     @NotNull
+    @JsonIgnore
     private String password;
     private String verifiedPassword;
     private String firstName;
     private String lastName;
     private String token;
 
-    private UserDto(String email, String password, String verifiedPassword, String firstName, String lastName, String token) {
-        this.email = email;
-        this.password = password;
-        this.verifiedPassword = verifiedPassword;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.token = token;
+    public UserDto() {
     }
 
     public String getEmail() {
@@ -68,5 +66,14 @@ public class UserDto {
 
     public void setVerifiedPassword(String verifiedPassword) {
         this.verifiedPassword = verifiedPassword;
+    }
+
+    public static UserDto of(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setToken(user.getToken());
+        return userDto;
     }
 }
