@@ -1,5 +1,8 @@
 package com.gabchak.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gabchak.controller.external.model.CategoryDto;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,10 +13,13 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "CATEGORY_NAME")
-    private String categoryName;
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY) //user field name in category.class
-    private List<Product> productList;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "DESCRIPTION")
+    private String description;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<Product> products;
 
     public Long getId() {
         return id;
@@ -23,19 +29,35 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public static Category of(CategoryDto categoryDto) {
+        Category category = new Category();
+        category.setName(categoryDto.getName());
+        category.setDescription(categoryDto.getDescription());
+        return category;
     }
 }
