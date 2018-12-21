@@ -1,32 +1,37 @@
 package com.gabchak.controller.external.model;
 
-import com.gabchak.model.Category;
+import com.gabchak.model.Product;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductDto {
 
-    private Long id;
-    @NotNull
+    private String productCode;
     private String name;
-    private Double price;
     private String description;
-    private Category category;
+    private Double price;
+    private String categoryName;
+    private Integer quantity;
 
-    public ProductDto(Long id, String name, Double price, String description, Category category) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.category = category;
+    public static ProductDto of(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setProductCode(product.getProductCode());
+        productDto.setName(product.getName());
+        productDto.setPrice(product.getPrice());
+        productDto.setDescription(product.getDescription());
+        productDto.setCategoryName(product.getCategory().getName());
+        return productDto;
     }
 
-    public Long getId() {
-        return id;
+    public static List<ProductDto> of(List<Product> products) {
+        return products.stream()
+                .map(ProductDto::of)
+                .collect(Collectors.toList());
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public static ProductDto empty() {
+        return new ProductDto();
     }
 
     public String getName() {
@@ -37,14 +42,6 @@ public class ProductDto {
         this.name = name;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -53,11 +50,35 @@ public class ProductDto {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
