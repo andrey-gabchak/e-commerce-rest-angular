@@ -67,4 +67,12 @@ public class CategoryDaoImpl implements CategoryDao {
         currentSession.delete(currentSession.load(Category.class, id));
         currentSession.flush();
     }
+
+    @Override
+    public Optional<Category> findByNameWithProductList(String name) {
+        return Optional.ofNullable(sessionFactory.getCurrentSession()
+                .createQuery("from Category c join fetch c.productList where c.name =:name", Category.class)
+                .setParameter("name", name)
+                .uniqueResult());
+    }
 }

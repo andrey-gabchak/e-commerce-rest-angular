@@ -21,4 +21,5 @@ public interface CategoryDao {
 
     void deleteById(Long id);
 
+    Optional<Category> findByNameWithProductList(String name);
 }
