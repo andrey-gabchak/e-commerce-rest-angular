@@ -20,4 +20,6 @@ public interface CategoryService {
     Optional<List<Category>> findAll();
 
     void deleteById(Long id);
+
+    Optional<Category> findByNameAndListProducts(String name);
 }

@@ -52,4 +52,9 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteById(Long id) {
         categoryDao.deleteById(id);
     }
+
+    @Override
+    public Optional<Category> findByNameAndListProducts(String name) {
+        return categoryDao.findByNameWithProductList(name);
+    }
 }
