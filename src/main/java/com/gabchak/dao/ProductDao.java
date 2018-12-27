@@ -3,10 +3,9 @@ package com.gabchak.dao;
 import com.gabchak.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductDao {
-
-    void addProduct(Product product);
 
     Product findById(Long id);
 
@@ -15,4 +14,8 @@ public interface ProductDao {
     void deleteById(Long id);
 
     List<Product> findAll();
+
+    void save(Product product);
+
+    Optional<Product> findByProductCode(String productCode);
 }
