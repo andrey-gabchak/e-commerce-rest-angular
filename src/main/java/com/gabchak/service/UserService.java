@@ -14,17 +14,21 @@ public interface UserService {
 
     Optional<User> verifyPassword(User userByEmail, User user);
 
-    List<User> findAll();
+    List<User> getAll();
 
     void update(User user);
 
     User findById(Long id);
 
-    void delete(Long id);
+    void deleteByEmail(String email);
 
     void logout();
 
     User findByToken(String token);
 
     User findUserByCookies(Cookie[] cookies);
+
+    User create(User user);
+
+    Optional<User> findByEmail(String email);
 }

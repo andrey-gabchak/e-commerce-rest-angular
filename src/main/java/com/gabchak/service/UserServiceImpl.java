@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> getAll() {
         return userDao.findAll();
     }
 
@@ -49,13 +49,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
-        userDao.delete(id);
+    public void logout() {
+        //TODO: write logic
     }
 
     @Override
-    public void logout() {
-        //TODO: write logic
+    public void deleteByEmail(String email) {
+        userDao.deleteByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
     @Override
@@ -91,6 +96,11 @@ public class UserServiceImpl implements UserService {
         return token != null ? findByToken(token) : null;
     }
 
+    @Override
+    public User create(User user) {
+        return null;
+    }
+
     private String getToken() {
         return UUID.randomUUID().toString();
     }
@@ -108,7 +118,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String bytesToHex(byte[] hash) {
-        StringBuffer hexString = new StringBuffer();
+        StringBuilder hexString = new StringBuilder();
         for (byte aHash : hash) {
             String hex = Integer.toHexString(0xff & aHash);
             if (hex.length() == 1) hexString.append('0');
