@@ -5,7 +5,7 @@ import com.gabchak.model.User;
 
 public interface CartService {
 
-    void addProductToCart(Long userId, Long productId, Integer quantity);
+    void addProductToCart(Long userId, String productCode, Integer quantity);
 
     Cart findAllUserProducts(User user);
 

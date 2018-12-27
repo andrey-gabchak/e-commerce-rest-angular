@@ -20,17 +20,17 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addToCart(Long userId, Long productId, Integer quantity) {
-        cartDao.addToCart(userId, productId, quantity);
+    public void addProductToCart(Long userId, String productCode, Integer quantity) {
+        cartDao.addToCart(userId, productCode, quantity);
     }
 
     @Override
-    public Cart findAllUsersProducts(User user) {
+    public Cart findAllUserProducts(User user) {
         Map<Product, Integer> products = cartDao.findAllUsersProducts(user.getId());
 
         Cart cart = new Cart();
 
-        Double amount = null;
+        Double amount = 0.0;
 
         for (Product product : products.keySet()) {
             amount += product.getPrice();
@@ -44,7 +44,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void deleteProductById(Long userId, Long productId) {
-        cartDao.deleteProductById(userId, productId);
+    public void deleteProductByProductCode(Long userId, String productCode) {
+        cartDao.deleteProductByProductCode(userId, productCode);
     }
 }
