@@ -3,16 +3,17 @@ package com.gabchak.service;
 import com.gabchak.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
-    void addProduct(Product product);
-
-    Product findById(Long id);
+    void save(Product product);
 
     void update(Product product);
 
-    void deleteById(Long id);
-
     List<Product> findAll();
+
+    Optional<Product> findByProductCode(String productCode);
+
+    void deleteByProductCode(String productCode);
 }
