@@ -16,7 +16,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    void update(User user);
+    User update(User user);
 
     User findById(Long id);
 
