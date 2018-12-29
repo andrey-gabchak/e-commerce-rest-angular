@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void addCategory(Category category) {
+    public void save(Category category) {
         categoryDao.addCategory(category);
     }
 
@@ -29,17 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<Category> findById(Long id) {
-        return categoryDao.findById(id);
-    }
-
-    @Override
-    public Category findByIdWithProductList(Long id) {
-        return categoryDao.findByIdWithProductList(id);
-    }
-
-    @Override
-    public Category findByName(String name) {
+    public Optional<Category> findByName(String name) {
         return categoryDao.findByName(name);
     }
 
@@ -49,8 +39,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        categoryDao.deleteById(id);
+    public void deleteByName(String name) {
+        categoryDao.deleteByName(name);
     }
 
     @Override
