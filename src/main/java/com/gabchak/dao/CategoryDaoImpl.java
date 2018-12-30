@@ -23,7 +23,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Optional<List<Category>> findAll() {
-        return Optional.ofNullable(sessionFactory.getCurrentSession().createNativeQuery("SELECT ID, CATEGORY_NAME FROM CATEGORIES",
+        return Optional.ofNullable(sessionFactory.getCurrentSession()
+                .createNativeQuery("SELECT ID, CATEGORY_NAME FROM CATEGORIES",
                 Category.class).list());
     }
 
@@ -54,18 +55,11 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category findByName(String name) {
-        return sessionFactory.getCurrentSession()
+    public Optional<Category> findByName(String name) {
+        return Optional.ofNullable(sessionFactory.getCurrentSession()
                 .createQuery("from Category where categoryName =:name", Category.class)
                 .setParameter("name", name)
-                .uniqueResult();
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.delete(currentSession.load(Category.class, id));
-        currentSession.flush();
+                .uniqueResult());
     }
 
     @Override
@@ -74,5 +68,12 @@ public class CategoryDaoImpl implements CategoryDao {
                 .createQuery("from Category c join fetch c.productList where c.name =:name", Category.class)
                 .setParameter("name", name)
                 .uniqueResult());
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(currentSession.load(Category.class, name));
+        currentSession.flush();
     }
 }

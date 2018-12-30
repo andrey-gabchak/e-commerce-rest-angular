@@ -15,11 +15,11 @@ public interface CategoryDao {
 
     Category findByIdWithProductList(Long id);
 
-    Category findByName(String name);
+    Optional<Category> findByName(String name);
 
     Optional<List<Category>> findAll();
 
-    void deleteById(Long id);
-
     Optional<Category> findByNameWithProductList(String name);
+
+    void deleteByName(String name);
 }
