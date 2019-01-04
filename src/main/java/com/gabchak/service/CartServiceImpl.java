@@ -25,18 +25,18 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart findAllUserProducts(User user) {
-        Map<Product, Integer> products = cartDao.findAllUsersProducts(user.getId());
+    public Cart findCart(User user) {
+        Map<Product, Integer> products = cartDao.findAllProductsOfUser(user.getId());
 
         Cart cart = new Cart();
 
         Double amount = 0.0;
 
-        for (Product product : products.keySet()) {
-            amount += product.getPrice();
+        for (Map.Entry<Product, Integer> productEntry : products.entrySet()) {
+            cart.setProductAndQuantity(productEntry.getKey(), productEntry.getValue());
+            amount += productEntry.getValue();
         }
 
-        cart.setProducts(products);
         cart.setAmount(amount);
         cart.setUser(user);
 
@@ -46,5 +46,16 @@ public class CartServiceImpl implements CartService {
     @Override
     public void deleteProductByProductCode(Long userId, String productCode) {
         cartDao.deleteProductByProductCode(userId, productCode);
+    }
+
+    @Override
+    public Cart setProductQuantity(Product product, Integer quantity, String categoryName, User user) {
+        return null;
+    }
+
+    @Override
+    public Cart deleteProduct(Product product, User user) {
+        cartDao.deleteProductByProductCode(user.getId(), product.getProductCode());
+        return cartDao.findAllProductsOfUser(user.getId());
     }
 }
