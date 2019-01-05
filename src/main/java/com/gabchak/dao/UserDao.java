@@ -11,7 +11,7 @@ public interface UserDao {
 
     Optional<User> findByEmail(String email);
 
-    void update(User user);
+    User update(User user);
 
     User findById(Long id);
 
@@ -19,5 +19,7 @@ public interface UserDao {
 
     List<User> findAll();
 
-    void delete(Long id);
+    void deleteById(Long id);
+
+    void deleteByEmail(String email);
 }
