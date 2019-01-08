@@ -6,13 +6,11 @@ import com.gabchak.model.User;
 
 public interface CartService {
 
-    void addProductToCart(Long userId, String productCode, Integer quantity);
+    void saveOrUpdateCart(Cart cart);
 
     Cart findCart(User user);
 
     void deleteProductByProductCode(Long userId, String productCode);
-
-    Cart setProductQuantity(Product product, Integer quantity, String categoryName, User user);
 
     Cart deleteProduct(Product product, User user);
 }

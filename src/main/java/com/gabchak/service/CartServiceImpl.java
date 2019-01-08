@@ -7,8 +7,6 @@ import com.gabchak.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -19,28 +17,13 @@ public class CartServiceImpl implements CartService {
         this.cartDao = cartDao;
     }
 
-    @Override
-    public void addProductToCart(Long userId, String productCode, Integer quantity) {
-        cartDao.addToCart(userId, productCode, quantity);
+    public void saveOrUpdateCart(Cart cart) {
+        cartDao.saveOrUpdateCart(cart);
     }
 
     @Override
     public Cart findCart(User user) {
-        Map<Product, Integer> products = cartDao.findAllProductsOfUser(user.getId());
-
-        Cart cart = new Cart();
-
-        Double amount = 0.0;
-
-        for (Map.Entry<Product, Integer> productEntry : products.entrySet()) {
-            cart.setProductAndQuantity(productEntry.getKey(), productEntry.getValue());
-            amount += productEntry.getValue();
-        }
-
-        cart.setAmount(amount);
-        cart.setUser(user);
-
-        return cart;
+        return cartDao.findCart(user);
     }
 
     @Override
@@ -49,13 +32,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart setProductQuantity(Product product, Integer quantity, String categoryName, User user) {
-        return null;
-    }
-
-    @Override
     public Cart deleteProduct(Product product, User user) {
         cartDao.deleteProductByProductCode(user.getId(), product.getProductCode());
-        return cartDao.findAllProductsOfUser(user.getId());
+        return cartDao.findCart(user);
     }
 }
