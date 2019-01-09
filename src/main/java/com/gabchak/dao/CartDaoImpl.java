@@ -1,28 +1,35 @@
 package com.gabchak.dao;
 
-import com.gabchak.model.Product;
+import com.gabchak.model.Cart;
+import com.gabchak.model.User;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.Map;
 
 @Repository
 @Transactional
 public class CartDaoImpl implements CartDao {
 
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
-    public void addToCart(Long userId, Long productId, Integer quantity) {
-
+    public Cart findCart(User user) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from carts c join fetch c.cartDetails where c.user =:user", Cart.class)
+                .setParameter("user", user)
+                .uniqueResult();
     }
 
     @Override
-    public Map<Product, Integer> findAllUsersProducts(Long userId) {
-        return null;
+    public void saveOrUpdateCart(Cart cart) {
+        sessionFactory.getCurrentSession().saveOrUpdate(cart);
     }
 
     @Override
-    public void deleteProductById(Long userId, Long productId) {
+    public void deleteProductByProductCode(Long userId, String productCode) {
 
     }
 }

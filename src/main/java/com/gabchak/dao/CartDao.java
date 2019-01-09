@@ -1,15 +1,14 @@
 package com.gabchak.dao;
 
-import com.gabchak.model.Product;
-
-import java.util.Map;
+import com.gabchak.model.Cart;
+import com.gabchak.model.User;
 
 public interface CartDao {
 
-    void addToCart(Long userId, Long productId, Integer quantity);
+    void saveOrUpdateCart(Cart cart);
 
-    Map<Product, Integer> findAllUsersProducts(Long userId);
+    Cart findCart(User user);
 
-    void deleteProductById(Long userId, Long productId);
+    void deleteProductByProductCode(Long userId, String productCode);
 
 }
