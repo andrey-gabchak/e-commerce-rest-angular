@@ -1,7 +1,8 @@
-package com.gabchak.service;
+package com.gabchak.service.impl;
 
 import com.gabchak.dao.UserDao;
 import com.gabchak.model.User;
+import com.gabchak.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
-package com.gabchak.dao;
+package com.gabchak.dao.impl;
 
+import com.gabchak.dao.CategoryDao;
 import com.gabchak.model.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

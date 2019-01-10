@@ -1,5 +1,6 @@
-package com.gabchak.dao;
+package com.gabchak.dao.impl;
 
+import com.gabchak.dao.ProductDao;
 import com.gabchak.model.Product;
 import org.springframework.stereotype.Repository;
 

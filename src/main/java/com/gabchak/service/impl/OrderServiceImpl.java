@@ -1,7 +1,8 @@
-package com.gabchak.service;
+package com.gabchak.service.impl;
 
 import com.gabchak.dao.OrderDao;
 import com.gabchak.model.Order;
+import com.gabchak.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

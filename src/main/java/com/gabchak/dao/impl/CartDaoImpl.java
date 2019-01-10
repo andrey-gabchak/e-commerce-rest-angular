@@ -1,5 +1,6 @@
-package com.gabchak.dao;
+package com.gabchak.dao.impl;
 
+import com.gabchak.dao.CartDao;
 import com.gabchak.model.Cart;
 import com.gabchak.model.User;
 import org.hibernate.SessionFactory;

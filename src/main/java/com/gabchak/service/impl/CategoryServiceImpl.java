@@ -1,7 +1,8 @@
-package com.gabchak.service;
+package com.gabchak.service.impl;
 
 import com.gabchak.dao.CategoryDao;
 import com.gabchak.model.Category;
+import com.gabchak.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

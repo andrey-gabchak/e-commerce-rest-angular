@@ -1,5 +1,6 @@
-package com.gabchak.dao;
+package com.gabchak.dao.impl;
 
+import com.gabchak.dao.UserDao;
 import com.gabchak.model.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(User user) {
-
+    public User update(User user) { //need return User, but 'update' method is void
     }
 
     @Override
@@ -56,7 +56,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteByEmail(String email) {
+
+    }
+
+    @Override
+    public void deleteById(Long id) {
 
     }
 }
