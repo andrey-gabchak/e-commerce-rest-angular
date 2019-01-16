@@ -31,7 +31,7 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public void deleteProductByProductCode(Long userId, String productCode) {
-        sessionFactory.getCurrentSession().delete()
+        sessionFactory.getCurrentSession()
                 .createQuery(
                         "delete from Cart c where c.cartDetails.product.productCode =:productCode " +
                                 "and c.cartDetails.cartDetailsId.userId =:userId")
