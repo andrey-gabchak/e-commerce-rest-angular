@@ -16,7 +16,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/rest/cart")
+@RequestMapping("/carts")
 public class CartController {
 
     @Autowired
@@ -30,24 +30,11 @@ public class CartController {
         Optional<User> byEmail = userService.findByEmail(name);
         User user = byEmail.orElse(null);
         Cart cart = cartService.findCart(user);
-
         if (cart != null) {
-            boolean isItNewProduct = true;
-            for (CartDetails cartDetail : cart.getCartDetails()) {
-                if (cartDetail.getProduct().equals(Product.of(productDto))) {
-                    cartDetail.setQuantity(cartDetail.getQuantity() + 1);
-                    isItNewProduct = false;
-                }
-            }
-            if (isItNewProduct) {
-                CartDetails cartDetail = createCartDetails(productDto, cart);
-                cart.getCartDetails().add(cartDetail);
-            }
+            cart = addProductIfCartExist(productDto, cart);
         }
         if (cart == null) {
-            cart = new Cart();
-            CartDetails cartDetail = createCartDetails(productDto, cart);
-            cart.getCartDetails().add(cartDetail);
+            cart = createNewCart(productDto);
         }
 
         cartService.saveOrUpdateCart(cart);
@@ -68,5 +55,29 @@ public class CartController {
         int defaultQuantity = 1;
         cartDetails.setQuantity(defaultQuantity);
         return cartDetails;
+    }
+
+    private Cart createNewCart(ProductDto productDto) {
+        Cart cart;
+        cart = new Cart();
+        CartDetails cartDetail = createCartDetails(productDto, cart);
+        cart.getCartDetails().add(cartDetail);
+        return cart;
+    }
+
+    private Cart addProductIfCartExist(ProductDto productDto, Cart cart) {
+        boolean isItNewProduct = true;
+        for (CartDetails cartDetail : cart.getCartDetails()) {
+            if (cartDetail.getProduct().equals(Product.of(productDto))) {
+                int defaultQuantity = 1;
+                cartDetail.setQuantity(cartDetail.getQuantity() + defaultQuantity);
+                isItNewProduct = false;
+            }
+        }
+        if (isItNewProduct) {
+            CartDetails cartDetail = createCartDetails(productDto, cart);
+            cart.getCartDetails().add(cartDetail);
+        }
+        return cart;
     }
 }
