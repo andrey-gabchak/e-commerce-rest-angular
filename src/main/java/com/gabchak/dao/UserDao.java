@@ -1,6 +1,6 @@
 package com.gabchak.dao;
 
-import com.gabchak.model.User;
+import com.gabchak.models.User;
 
 import java.util.List;
 import java.util.Optional;

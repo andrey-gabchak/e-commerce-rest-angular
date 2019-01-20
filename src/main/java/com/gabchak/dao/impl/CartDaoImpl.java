@@ -1,8 +1,8 @@
 package com.gabchak.dao.impl;
 
 import com.gabchak.dao.CartDao;
-import com.gabchak.model.Cart;
-import com.gabchak.model.User;
+import com.gabchak.models.Cart;
+import com.gabchak.models.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
