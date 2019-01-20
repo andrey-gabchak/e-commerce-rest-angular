@@ -1,8 +1,12 @@
 package com.gabchak.models;
 
-import javax.persistence.*;
-import java.util.Objects;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
+
+@Data
+@EqualsAndHashCode
 @Entity
 @Table(name = "CARTS_DETAILS")
 public class CartDetails {
@@ -22,52 +26,7 @@ public class CartDetails {
     @ManyToOne
     private Product product;
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public CartDetailsId getCartDetailsId() {
-        return cartDetailsId;
-    }
-
-    public void setCartDetailsId(CartDetailsId cartDetailsId) {
-        this.cartDetailsId = cartDetailsId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public static CartDetails empty() {
         return new CartDetails();
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CartDetails)) return false;
-        CartDetails that = (CartDetails) o;
-        return Objects.equals(cartDetailsId, that.cartDetailsId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cartDetailsId);
     }
 }

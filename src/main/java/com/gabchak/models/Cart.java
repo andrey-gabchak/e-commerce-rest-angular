@@ -2,12 +2,14 @@ package com.gabchak.models;
 
 import com.gabchak.controllers.external.model.CartDto;
 import com.gabchak.controllers.external.model.ProductDto;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Data
 @Entity
 @Table(name = "CARTS")
 public class Cart {
@@ -38,38 +40,6 @@ public class Cart {
         }
 
         return cart;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public List<CartDetails> getCartDetails() {
-        return cartDetails;
-    }
-
-    public void setCartDetails(List<CartDetails> cartDetails) {
-        this.cartDetails = cartDetails;
     }
 
     public void setProductAndQuantity(Product product, Integer quantity) {
