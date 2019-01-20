@@ -1,7 +1,7 @@
 package com.gabchak.dao.impl;
 
 import com.gabchak.dao.UserDao;
-import com.gabchak.model.User;
+import com.gabchak.models.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

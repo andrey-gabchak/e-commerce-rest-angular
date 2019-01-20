@@ -1,11 +1,10 @@
-package com.gabchak.dao;
-
+package com.gabchak.services;
 
 import com.gabchak.models.Order;
 
 import java.util.List;
 
-public interface OrderDao {
+public interface OrderService {
 
     long create(Order order);
 

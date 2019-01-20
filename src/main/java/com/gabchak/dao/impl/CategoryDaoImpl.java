@@ -1,7 +1,7 @@
 package com.gabchak.dao.impl;
 
 import com.gabchak.dao.CategoryDao;
-import com.gabchak.model.Category;
+import com.gabchak.models.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

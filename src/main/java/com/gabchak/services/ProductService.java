@@ -1,21 +1,19 @@
-package com.gabchak.dao;
+package com.gabchak.services;
 
 import com.gabchak.models.Product;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductDao {
-
-    Product findById(Long id);
-
-    void update(Product product);
-
-    void deleteById(Long id);
-
-    List<Product> findAll();
+public interface ProductService {
 
     void save(Product product);
 
+    void update(Product product);
+
+    List<Product> findAll();
+
     Optional<Product> findByProductCode(String productCode);
+
+    void deleteByProductCode(String productCode);
 }

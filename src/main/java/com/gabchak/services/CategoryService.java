@@ -1,25 +1,21 @@
-package com.gabchak.dao;
+package com.gabchak.services;
 
 import com.gabchak.models.Category;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoryDao {
+public interface CategoryService {
 
-    void addCategory(Category category);
+    void save(Category category);
 
     void update(Category category);
-
-    Optional<Category> findById(Long id);
-
-    Category findByIdWithProductList(Long id);
 
     Optional<Category> findByName(String name);
 
     Optional<List<Category>> findAll();
 
-    Optional<Category> findByNameWithProductList(String name);
+    Optional<Category> findByNameAndListProducts(String name);
 
     void deleteByName(String name);
 }
