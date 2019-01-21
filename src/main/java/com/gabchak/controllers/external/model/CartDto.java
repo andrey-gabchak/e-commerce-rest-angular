@@ -3,10 +3,12 @@ package com.gabchak.controllers.external.model;
 import com.gabchak.models.Cart;
 import com.gabchak.models.CartDetails;
 import com.gabchak.models.User;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class CartDto {
 
     private User user;
@@ -23,29 +25,5 @@ public class CartDto {
                     .put(ProductDto.of(cartDetails.getProduct()), cartDetails.getQuantity());
         }
         return cartDto;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public Map<ProductDto, Integer> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Map<ProductDto, Integer> products) {
-        this.products = products;
     }
 }
