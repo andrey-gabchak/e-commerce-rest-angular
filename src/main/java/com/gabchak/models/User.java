@@ -1,12 +1,17 @@
 package com.gabchak.models;
 
 import com.gabchak.controllers.external.model.RegisterUserDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -26,17 +31,10 @@ public class User {
     private String lastName;
     @Column(name = "TOKEN")
     private String token;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users") //имя Set поля в Role.class
-    private Set<Role> roles = new HashSet<>();
-
-    public User(Long id, String email, String password, String firstName, String lastName, String token) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.token = token;
-    }
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Role> roles;
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 
     public static User of(RegisterUserDto userDto) {
         User user = new User();
@@ -46,70 +44,6 @@ public class User {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         return user;
-    }
-
-    public User() {
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public void addRole(Role role) {
