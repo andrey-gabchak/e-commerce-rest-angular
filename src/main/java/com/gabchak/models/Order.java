@@ -1,66 +1,27 @@
 package com.gabchak.models;
 
 import com.gabchak.controllers.external.model.OrderDto;
+import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;
 
+@Data
+@Entity
+@Table(name = "ORDERS")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+    @ManyToOne
+    @JoinColumn(name = "FK_CUSTOMER_ID")
     private User customer;
     private LocalDate orderDate;
     private String orderComment;
     private Double orderAmount;
     private Map<Product, Integer> products;
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public User getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(User customer) {
-        this.customer = customer;
-    }
-
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public String getOrderComment() {
-        return orderComment;
-    }
-
-    public void setOrderComment(String orderComment) {
-        this.orderComment = orderComment;
-    }
-
-    public Map<Product, Integer> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Map<Product, Integer> products) {
-        this.products = products;
-    }
-
-    public Double getOrderAmount() {
-        return orderAmount;
-    }
-
-    public void setOrderAmount(Double orderAmount) {
-        this.orderAmount = orderAmount;
-    }
 
     public void addProduct(Product product, Integer quantity) {
         products.put(product, quantity);
