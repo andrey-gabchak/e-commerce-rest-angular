@@ -1,7 +1,7 @@
 package com.gabchak.services.impl;
 
-import com.gabchak.dao.UserDao;
 import com.gabchak.models.User;
+import com.gabchak.repositories.UserRepository;
 import com.gabchak.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,36 +17,27 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
-
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private UserRepository userRepository;
 
     @Override
-    public void addUser(User user) {
+    public User save(User user) {
         String hashedPassword = hashPassword(user.getPassword());
 
         user.setToken(getToken());
         user.setPassword(hashedPassword);
 
-        userDao.addUser(user);
+        return userRepository.save(user);
     }
 
     @Override
-    public List<User> getAll() {
-        return userDao.findAll();
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    public User update(User user) {
-        return userDao.update(user);
-    }
-
-    @Override
-    public User findById(Long id) {
-        return userDao.findById(id);
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -56,22 +47,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteByEmail(String email) {
-        userDao.deleteByEmail(email);
+        userRepository.deleteByEmail(email);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userDao.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public User findByToken(String token) {
-        return userDao.findByToken(token);
-    }
-
-    @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userDao.findByEmail(email);
+        return userRepository.findByToken(token);
     }
 
     @Override
@@ -79,22 +65,6 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = hashPassword(user.getPassword());
 
         return hashedPassword.equals(userByEmail.getPassword()) ? Optional.of(userByEmail) : Optional.empty();
-    }
-
-    @Override
-    public User findUserByCookies(Cookie[] cookies) {
-
-        String token = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("MATE")) {
-                    token = cookie.getValue();
-                }
-            }
-        }
-
-        return token != null ? findByToken(token) : null;
     }
 
     @Override

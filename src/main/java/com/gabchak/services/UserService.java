@@ -8,25 +8,19 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void addUser(User user);
-
-    Optional<User> getUserByEmail(String email);
+    User save(User user);
 
     Optional<User> verifyPassword(User userByEmail, User user);
 
-    List<User> getAll();
+    List<User> findAll();
 
-    User update(User user);
-
-    User findById(Long id);
+    Optional<User> findById(Long id);
 
     void deleteByEmail(String email);
 
     void logout();
 
     User findByToken(String token);
-
-    User findUserByCookies(Cookie[] cookies);
 
     User create(User user);
 
