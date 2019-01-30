@@ -22,7 +22,5 @@ public interface UserService {
 
     User findByToken(String token);
 
-    User create(User user);
-
     Optional<User> findByEmail(String email);
 }

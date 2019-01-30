@@ -6,7 +6,6 @@ import com.gabchak.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -65,11 +64,6 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = hashPassword(user.getPassword());
 
         return hashedPassword.equals(userByEmail.getPassword()) ? Optional.of(userByEmail) : Optional.empty();
-    }
-
-    @Override
-    public User create(User user) {
-        return null;
     }
 
     private String getToken() {
