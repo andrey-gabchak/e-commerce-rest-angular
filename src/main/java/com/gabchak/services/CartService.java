@@ -4,11 +4,13 @@ import com.gabchak.models.Cart;
 import com.gabchak.models.Product;
 import com.gabchak.models.User;
 
+import java.util.Optional;
+
 public interface CartService {
 
-    void saveOrUpdateCart(Cart cart);
+    Cart save(Cart cart);
 
-    Cart findCart(User user);
+    Optional<Cart> findByUser(User user);
 
     void deleteProductByProductCode(Long userId, String productCode);
 

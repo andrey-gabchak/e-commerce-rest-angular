@@ -1,7 +1,7 @@
 package com.gabchak.services.impl;
 
-import com.gabchak.dao.CategoryDao;
 import com.gabchak.models.Category;
+import com.gabchak.repositories.CategoryRepository;
 import com.gabchak.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,40 +12,26 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryDao categoryDao;
-
     @Autowired
-    public CategoryServiceImpl(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
+    private CategoryRepository categoryRepository;
+
+    @Override
+    public Category save(Category category) {
+        return categoryRepository.save(category);
     }
 
     @Override
-    public void save(Category category) {
-        categoryDao.addCategory(category);
+    public Optional<Category> findById(Long id) {
+        return categoryRepository.findById(id);
     }
 
     @Override
-    public void update(Category category) {
-        categoryDao.update(category);
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
     @Override
-    public Optional<Category> findByName(String name) {
-        return categoryDao.findByName(name);
-    }
-
-    @Override
-    public Optional<List<Category>> findAll() {
-        return categoryDao.findAll();
-    }
-
-    @Override
-    public void deleteByName(String name) {
-        categoryDao.deleteByName(name);
-    }
-
-    @Override
-    public Optional<Category> findByNameAndListProducts(String name) {
-        return categoryDao.findByNameWithProductList(name);
+    public void deleteById(Long id) {
+        categoryRepository.deleteById(id);
     }
 }

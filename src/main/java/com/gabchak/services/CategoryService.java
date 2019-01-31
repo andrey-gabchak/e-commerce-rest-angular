@@ -7,15 +7,11 @@ import java.util.Optional;
 
 public interface CategoryService {
 
-    void save(Category category);
+    Category save(Category category);
 
-    void update(Category category);
+    Optional<Category> findById(Long id);
 
-    Optional<Category> findByName(String name);
+    List<Category> findAll();
 
-    Optional<List<Category>> findAll();
-
-    Optional<Category> findByNameAndListProducts(String name);
-
-    void deleteByName(String name);
+    void deleteById(Long id);
 }

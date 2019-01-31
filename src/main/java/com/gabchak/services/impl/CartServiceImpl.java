@@ -1,32 +1,42 @@
 package com.gabchak.services.impl;
 
-import com.gabchak.dao.CartDao;
 import com.gabchak.models.Cart;
 import com.gabchak.models.Product;
 import com.gabchak.models.User;
+import com.gabchak.repositories.CartRepository;
 import com.gabchak.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CartServiceImpl implements CartService {
 
-    private CartDao cartDao;
-
     @Autowired
-    public CartServiceImpl(CartDao cartDao) {
-        this.cartDao = cartDao;
-    }
+    private CartRepository cartRepository;
 
-    public void saveOrUpdateCart(Cart cart) {
-        cartDao.saveOrUpdateCart(cart);
+    @Override
+    public Cart save(Cart cart) {
+        return cartRepository.save(cart);
     }
 
     @Override
-    public Cart findCart(User user) {
-        return cartDao.findCart(user);
+    public Optional<Cart> findByUser(User user) {
+        return cartRepository.findByUser(user);
     }
 
+    @Override
+    public void deleteProductByProductCode(Long userId, String productCode) {
+
+    }
+
+    @Override
+    public Cart deleteProduct(Product product, User user) {
+        return null;
+    }
+
+    /*
     @Override
     public void deleteProductByProductCode(Long userId, String productCode) {
         cartDao.deleteProductByProductCode(userId, productCode);
@@ -35,6 +45,6 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart deleteProduct(Product product, User user) {
         cartDao.deleteProductByProductCode(user.getId(), product.getProductCode());
-        return cartDao.findCart(user);
-    }
+        return cartDao.findByUser(user);
+    }*/
 }
