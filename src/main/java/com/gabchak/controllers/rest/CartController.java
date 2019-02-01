@@ -29,17 +29,22 @@ public class CartController {
         String name = principal.getName();
         Optional<User> byEmail = userService.findByEmail(name);
         User user = byEmail.orElse(null);
-        Cart cart = cartService.findCart(user);
-        if (cart != null) {
-            cart = addProductIfCartExist(productDto, cart);
+        boolean isCartPresent = cartService.findByUser(user).isPresent(); //used optional
+        Cart cart = new Cart();
+
+        if (isCartPresent) {
+            cart = addProductIfCartExist(productDto,
+                    cartService.findByUser(user).get());
         }
-        if (cart == null) {
+        if (isCartPresent) {
             cart = createNewCart(productDto);
         }
 
-        cartService.saveOrUpdateCart(cart);
+        cartService.save(cart);
 
-        return ResponseEntity.ok(CartDto.of(cart));
+        return Optional.of(CartDto.of(cart))
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
     @DeleteMapping
