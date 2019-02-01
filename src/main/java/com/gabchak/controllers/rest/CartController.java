@@ -45,7 +45,9 @@ public class CartController {
     @DeleteMapping
     public ResponseEntity<CartDto> deleteProductFromCart(@RequestBody ProductDto productDto, User user) {
         Cart cart = cartService.deleteProduct(Product.of(productDto), user);
-        return ResponseEntity.ok(CartDto.of(cart));
+        return Optional.of(CartDto.of(cart))
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build); //Fixed ResponseEntity if cart not found
     }
 
     private CartDetails createCartDetails(ProductDto productDto, Cart cart) {
