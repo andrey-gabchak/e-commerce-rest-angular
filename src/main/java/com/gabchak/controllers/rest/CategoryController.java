@@ -25,9 +25,9 @@ public class CategoryController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @GetMapping("/{categoryName}")
-    public ResponseEntity<CategoryDto> getCategory(@PathVariable String categoryName) {
-        return categoryService.findByName(categoryName)
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
+        return categoryService.findById(id)
                 .map(CategoryDto::of)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
