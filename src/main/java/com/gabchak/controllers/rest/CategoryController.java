@@ -18,8 +18,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAllCategory() {
-        return categoryService.findAll()
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+        return Optional.of(categoryService.findAll())
                 .map(CategoryDto::of)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
