@@ -3,6 +3,8 @@ package com.gabchak.services.impl;
 import com.gabchak.models.Order;
 import com.gabchak.repositories.OrderRepository;
 import com.gabchak.services.OrderService;
+import com.gabchak.services.dto.OrderDto;
+import com.gabchak.services.dto.mappers.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,26 +14,34 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
     private OrderRepository orderRepository;
+    private OrderMapper orderMapper;
 
-    @Override
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper) {
+        this.orderRepository = orderRepository;
+        this.orderMapper = orderMapper;
     }
 
     @Override
-    public Optional<Order> findById(Long id) {
-        return orderRepository.findById(id);
+    public OrderDto save(OrderDto orderDto) {
+        Order order = orderMapper.map(orderDto, Order.class);
+        return orderMapper.map(orderRepository.save(order), OrderDto.class);
     }
 
     @Override
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public Optional<OrderDto> findById(Integer id) {
+        return orderRepository.findById(id)
+                .map(order -> orderMapper.map(order, OrderDto.class));
     }
 
     @Override
-    public void deleteById(Long id) {
+    public List<OrderDto> findAll() {
+        return orderMapper.mapAsList(orderRepository.findAll(), OrderDto.class);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
         orderRepository.deleteById(id);
     }
 }
