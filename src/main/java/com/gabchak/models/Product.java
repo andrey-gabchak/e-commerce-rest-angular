@@ -1,10 +1,17 @@
 package com.gabchak.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.gabchak.controllers.external.model.ProductDto;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Data
 @Entity
@@ -13,7 +20,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name = "PRODUCT_CODE")
     private String productCode;
     @Column(name = "NAME")
@@ -27,11 +34,4 @@ public class Product {
     @JsonBackReference
     private Category category;
 
-    public static Product of(ProductDto productDto) {
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setDescription(productDto.getDescription());
-        return product;
-    }
 }

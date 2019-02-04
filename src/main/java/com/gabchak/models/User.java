@@ -1,11 +1,20 @@
 package com.gabchak.models;
 
-import com.gabchak.controllers.external.model.RegisterUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
@@ -13,12 +22,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @NotNull
     @Column(name = "EMAIL")
     private String email;
@@ -35,16 +44,6 @@ public class User {
     private Set<Role> roles;
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders;
-
-    public static User of(RegisterUserDto userDto) {
-        User user = new User();
-        user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
-        user.setToken(userDto.getToken());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        return user;
-    }
 
     public void addRole(Role role) {
         roles.add(role);

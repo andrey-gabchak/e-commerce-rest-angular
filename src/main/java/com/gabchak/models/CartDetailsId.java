@@ -11,10 +11,7 @@ import java.io.Serializable;
 @Embeddable
 public class CartDetailsId implements Serializable {
 
-    private Long fkCartId;
-    private Long fkProductId;
+    private Integer fkCartId;
+    private Integer fkProductId;
 
-    public static CartDetailsId getEmpty() {
-        return new CartDetailsId();
-    }
 }

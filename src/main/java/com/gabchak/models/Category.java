@@ -1,10 +1,16 @@
 package com.gabchak.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.gabchak.controllers.external.model.CategoryDto;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Data
@@ -14,7 +20,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name = "NAME")
     private String name;
     @Column(name = "DESCRIPTION")
@@ -23,10 +29,4 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
 
-    public static Category of(CategoryDto categoryDto) {
-        Category category = new Category();
-        category.setName(categoryDto.getName());
-        category.setDescription(categoryDto.getDescription());
-        return category;
-    }
 }

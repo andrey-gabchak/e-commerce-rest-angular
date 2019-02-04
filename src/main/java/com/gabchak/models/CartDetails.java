@@ -25,8 +25,4 @@ public class CartDetails {
     @JoinColumn(name = "FK_PRODUCT_ID")
     @ManyToOne
     private Product product;
-
-    public static CartDetails empty() {
-        return new CartDetails();
-    }
 }
