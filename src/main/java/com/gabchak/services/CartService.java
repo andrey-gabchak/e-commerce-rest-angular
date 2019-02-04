@@ -1,18 +1,18 @@
 package com.gabchak.services;
 
-import com.gabchak.models.Cart;
-import com.gabchak.models.Product;
-import com.gabchak.models.User;
+import com.gabchak.services.dto.CartDto;
+import com.gabchak.services.dto.ProductDto;
+import com.gabchak.services.dto.UserDto;
 
 import java.util.Optional;
 
 public interface CartService {
 
-    Cart save(Cart cart);
+    CartDto save(CartDto cartDto);
 
-    Optional<Cart> findByUser(User user);
+    Optional<CartDto> findByUser(UserDto userDto);
 
-    void deleteProductByProductCode(Long userId, String productCode);
+    void deleteProductByProductCode(Integer userId, String productCode);
 
-    Cart deleteProduct(Product product, User user);
+    CartDto deleteProduct(ProductDto product, UserDto user);
 }

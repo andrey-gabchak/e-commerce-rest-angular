@@ -1,7 +1,6 @@
-package com.gabchak.controllers.external.model;
+package com.gabchak.services.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gabchak.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class UserDto {
 
+    private Integer id;
     @NotNull
     private String email;
     @NotNull
@@ -22,13 +22,4 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String token;
-
-    public static UserDto of(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setToken(user.getToken());
-        return userDto;
-    }
 }

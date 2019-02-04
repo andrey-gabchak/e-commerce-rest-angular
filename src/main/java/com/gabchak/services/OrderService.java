@@ -1,18 +1,18 @@
 package com.gabchak.services;
 
-import com.gabchak.models.Order;
+import com.gabchak.services.dto.OrderDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
 
-    Order save(Order order);
+    OrderDto save(OrderDto orderDto);
 
-    Optional<Order> findById(Long id);
+    Optional<OrderDto> findById(Integer id);
 
-    List<Order> findAll();
+    List<OrderDto> findAll();
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 
 }

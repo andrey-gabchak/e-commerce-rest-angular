@@ -1,13 +1,14 @@
-package com.gabchak.controllers.rest;
+package com.gabchak.controllers;
 
-import com.gabchak.controllers.external.model.CartDto;
-import com.gabchak.controllers.external.model.ProductDto;
+import com.gabchak.services.dto.CartDto;
+import com.gabchak.services.dto.ProductDto;
 import com.gabchak.models.Cart;
 import com.gabchak.models.CartDetails;
 import com.gabchak.models.Product;
 import com.gabchak.models.User;
 import com.gabchak.services.CartService;
 import com.gabchak.services.UserService;
+import com.gabchak.services.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,32 +28,31 @@ public class CartController {
     @PostMapping("/buy")
     public ResponseEntity<CartDto> addProductToCart(@RequestBody ProductDto productDto, Principal principal) {
         String name = principal.getName();
-        Optional<User> byEmail = userService.findByEmail(name);
-        User user = byEmail.orElse(null);
-        boolean isCartPresent = cartService.findByUser(user).isPresent(); //used optional
+        Optional<UserDto> byEmail = userService.findByEmail(name);
+        UserDto userDto = byEmail.orElse(null);
+        boolean isCartPresent = cartService.findByUser(userDto).isPresent();
         Cart cart = new Cart();
 
         if (isCartPresent) {
             cart = addProductIfCartExist(productDto,
-                    cartService.findByUser(user).get());
+                    cartService.findByUser(userDto).get());
         }
         if (isCartPresent) {
             cart = createNewCart(productDto);
         }
 
-        cartService.save(cart);
+        ;
 
-        return Optional.of(CartDto.of(cart))
+        return Optional.of(cartService.save(cart))
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
     @DeleteMapping
-    public ResponseEntity<CartDto> deleteProductFromCart(@RequestBody ProductDto productDto, User user) {
-        Cart cart = cartService.deleteProduct(Product.of(productDto), user);
-        return Optional.of(CartDto.of(cart))
+    public ResponseEntity<CartDto> deleteProductFromCart(@RequestBody ProductDto productDto, UserDto userDto) {
+        return Optional.of(cartService.deleteProduct(productDto, userDto))
                 .map(ResponseEntity::ok)
-                .orElseGet(ResponseEntity.notFound()::build); //Fixed ResponseEntity if cart not found
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
     private CartDetails createCartDetails(ProductDto productDto, Cart cart) {

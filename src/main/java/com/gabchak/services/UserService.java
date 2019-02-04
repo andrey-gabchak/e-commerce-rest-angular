@@ -1,26 +1,27 @@
 package com.gabchak.services;
 
-import com.gabchak.models.User;
+import com.gabchak.services.dto.UserDto;
 
-import javax.servlet.http.Cookie;
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
 
-    User save(User user);
+    UserDto register(UserDto userDto);
 
-    Optional<User> verifyPassword(User userByEmail, User user);
+    UserDto save(UserDto userDto);
 
-    List<User> findAll();
+    Optional<UserDto> verifyPassword(UserDto userByEmail, UserDto user);
 
-    Optional<User> findById(Long id);
+    List<UserDto> findAll();
+
+    Optional<UserDto> findById(Integer id);
 
     void deleteByEmail(String email);
 
     void logout();
 
-    User findByToken(String token);
+    Optional<UserDto> findByToken(String token);
 
-    Optional<User> findByEmail(String email);
+    Optional<UserDto> findByEmail(String email);
 }

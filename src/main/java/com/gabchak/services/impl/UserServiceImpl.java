@@ -3,6 +3,8 @@ package com.gabchak.services.impl;
 import com.gabchak.models.User;
 import com.gabchak.repositories.UserRepository;
 import com.gabchak.services.UserService;
+import com.gabchak.services.dto.UserDto;
+import com.gabchak.services.dto.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +18,45 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
+    private UserMapper userMapper;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
+
+
 
     @Override
-    public User save(User user) {
-        String hashedPassword = hashPassword(user.getPassword());
+    public UserDto register(UserDto userDto) {
+        String hashedPassword = hashPassword(userDto.getPassword());
+
+        User user = userMapper.map(userDto, User.class);
 
         user.setToken(getToken());
         user.setPassword(hashedPassword);
 
-        return userRepository.save(user);
+        return userMapper.map(userRepository.save(user), UserDto.class);
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public UserDto save(UserDto userDto) {
+        User user = userMapper.map(userDto, User.class);
+        return userMapper.map(userRepository.save(user), UserDto.class);
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public List<UserDto> findAll() {
+        return userMapper.mapAsList(userRepository.findAll(), UserDto.class);
+
+    }
+
+    @Override
+    public Optional<UserDto> findById(Integer id) {
+        return userRepository.findById(id)
+                .map(user -> userMapper.map(user, UserDto.class));
     }
 
     @Override
@@ -50,20 +70,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<UserDto> findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> userMapper.map(user, UserDto.class));
     }
 
     @Override
-    public User findByToken(String token) {
-        return userRepository.findByToken(token);
+    public Optional<UserDto> findByToken(String token) {
+        return userRepository.findByToken(token)
+                .map(user -> userMapper.map(user, UserDto.class));
     }
 
     @Override
-    public Optional<User> verifyPassword(User userByEmail, User user) {
+    public Optional<UserDto> verifyPassword(UserDto userByEmail, UserDto user) {
         String hashedPassword = hashPassword(user.getPassword());
 
-        return hashedPassword.equals(userByEmail.getPassword()) ? Optional.of(userByEmail) : Optional.empty();
+        return hashedPassword.equals(userByEmail.getPassword())
+                ? Optional.of(userByEmail) : Optional.empty();
     }
 
     private String getToken() {

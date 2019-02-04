@@ -1,17 +1,17 @@
 package com.gabchak.services;
 
-import com.gabchak.models.Product;
+import com.gabchak.services.dto.ProductDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
 
-    Product save(Product product);
+    ProductDto save(ProductDto productDto);
 
-    List<Product> findAll();
+    List<ProductDto> findAll();
 
-    Optional<Product> findById(Long id);
+    Optional<ProductDto> findById(Integer id);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 }

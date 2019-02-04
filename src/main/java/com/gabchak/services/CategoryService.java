@@ -1,17 +1,17 @@
 package com.gabchak.services;
 
-import com.gabchak.models.Category;
+import com.gabchak.services.dto.CategoryDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
 
-    Category save(Category category);
+    CategoryDto save(CategoryDto categoryDto);
 
-    Optional<Category> findById(Long id);
+    Optional<CategoryDto> findById(Integer id);
 
-    List<Category> findAll();
+    List<CategoryDto> findAll();
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 }

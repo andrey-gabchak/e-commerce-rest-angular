@@ -1,4 +1,4 @@
-package com.gabchak.controllers.external.model;
+package com.gabchak.services.dto;
 
 import com.gabchak.validators.annotations.FieldMatch;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,4 @@ public class RegisterUserDto {
     private String firstName;
     private String lastName;
     private String token;
-
-    public static RegisterUserDto empty() {
-        return new RegisterUserDto();
-    }
 }
