@@ -9,12 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.time.LocalDate;
 import java.util.Map;
 
 @Data
 @Entity
-@Table(name = "ORDERS")
+@Table(name = "ORDERS", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class Order {
 
     @Id
@@ -27,12 +28,4 @@ public class Order {
     private String orderComment;
     private Double orderAmount;
     private Map<Product, Integer> products;
-
-    public void addProduct(Product product, Integer quantity) {
-        products.put(product, quantity);
-    }
-
-    public void increaseQuantity(Product product, Integer quantity) {
-        products.merge(product, quantity, (a, b) -> a + b);
-    }
 }
