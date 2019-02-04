@@ -27,12 +27,4 @@ public class Order {
     private String orderComment;
     private Double orderAmount;
     private Map<Product, Integer> products;
-
-    public void addProduct(Product product, Integer quantity) {
-        products.put(product, quantity);
-    }
-
-    public void increaseQuantity(Product product, Integer quantity) {
-        products.merge(product, quantity, (a, b) -> a + b);
-    }
 }
