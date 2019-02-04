@@ -37,7 +37,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDto> findById(@PathVariable Integer id) {
         return categoryService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
@@ -59,7 +59,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public void deleteById(@PathVariable Integer id) {
         categoryService.deleteById(id);
     }
 }
