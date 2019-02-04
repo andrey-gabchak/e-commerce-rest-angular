@@ -54,12 +54,4 @@ public class CategoryController {
     public void deleteById(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
-
-    @GetMapping("/{categoryName}/products")
-    public ResponseEntity<CategoryDto> findByNameWithListProducts(@PathVariable String categoryName) {
-        return categoryService.findByNameAndListProducts(categoryName)
-                .map(CategoryDto::of)
-                .map(ResponseEntity::ok)
-                .orElseGet(ResponseEntity.notFound()::build);
-    }
 }
