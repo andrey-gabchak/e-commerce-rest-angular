@@ -12,7 +12,5 @@ public interface CartService {
 
     Optional<CartDto> findByUser(UserDto userDto);
 
-    void deleteProductByProductCode(Integer userId, String productCode);
-
     CartDto deleteProduct(ProductDto product, UserDto user);
 }
