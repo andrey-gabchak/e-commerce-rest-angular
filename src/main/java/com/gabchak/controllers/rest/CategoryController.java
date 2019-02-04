@@ -34,22 +34,20 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<List<CategoryDto>> saveCategory(@RequestBody CategoryDto categoryDto) {
-        categoryService.save(Category.of(categoryDto));
-        return getAllCategory();
+    public ResponseEntity<CategoryDto> save(@RequestBody CategoryDto categoryDto) {
+        Category category = categoryService.save(Category.of(categoryDto));
+        return Optional.of(CategoryDto.of(category))
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
 
     @PutMapping
-    public ResponseEntity<List<CategoryDto>> updateCategory(@RequestBody CategoryDto category, @PathVariable String name) {
-        Category inputCategory = Category.of(category);
-        Optional<Category> oldCategory = categoryService.findByName(name);
-        if (oldCategory.isPresent()) {
-            Category tempCategory = oldCategory.get();
-            tempCategory.setName(inputCategory.getName());
-            categoryService.save(tempCategory);
-        }
-        return getAllCategory();
+    public ResponseEntity<CategoryDto> update(@RequestBody CategoryDto categoryDto) {
+        Category category = categoryService.save(Category.of(categoryDto));
+        return Optional.of(CategoryDto.of(category))
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
     @DeleteMapping("/{categoryName}")
