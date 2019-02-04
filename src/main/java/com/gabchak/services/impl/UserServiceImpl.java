@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+//    TODO: use spring security instead manual methods
 
     @Override
     public UserDto register(UserDto userDto) {
@@ -42,37 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto save(UserDto userDto) {
-        User user = userMapper.map(userDto, User.class);
-        return userMapper.map(userRepository.save(user), UserDto.class);
-    }
-
-    @Override
-    public List<UserDto> findAll() {
-        return userMapper.mapAsList(userRepository.findAll(), UserDto.class);
-
-    }
-
-    @Override
-    public Optional<UserDto> findById(Integer id) {
-        return userRepository.findById(id)
-                .map(user -> userMapper.map(user, UserDto.class));
-    }
-
-    @Override
     public void logout() {
         //TODO: write logic
-    }
-
-    @Override
-    public void deleteByEmail(String email) {
-        userRepository.deleteByEmail(email);
-    }
-
-    @Override
-    public Optional<UserDto> findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(user -> userMapper.map(user, UserDto.class));
     }
 
     @Override
@@ -87,6 +59,35 @@ public class UserServiceImpl implements UserService {
 
         return hashedPassword.equals(userByEmail.getPassword())
                 ? Optional.of(userByEmail) : Optional.empty();
+    }
+
+    @Override
+    public UserDto save(UserDto userDto) {
+        User user = userMapper.map(userDto, User.class);
+        return userMapper.map(userRepository.save(user), UserDto.class);
+    }
+
+    @Override
+    public Optional<UserDto> findById(Integer id) {
+        return userRepository.findById(id)
+                .map(user -> userMapper.map(user, UserDto.class));
+    }
+
+    @Override
+    public List<UserDto> findAll() {
+        return userMapper.mapAsList(userRepository.findAll(), UserDto.class);
+
+    }
+
+    @Override
+    public Optional<UserDto> findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> userMapper.map(user, UserDto.class));
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        userRepository.deleteByEmail(email);
     }
 
     private String getToken() {
