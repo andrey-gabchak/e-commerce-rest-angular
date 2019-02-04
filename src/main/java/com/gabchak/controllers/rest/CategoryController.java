@@ -50,10 +50,9 @@ public class CategoryController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @DeleteMapping("/{categoryName}")
-    public ResponseEntity<List<CategoryDto>> deleteByName(@PathVariable String categoryName) {
-        categoryService.deleteByName(categoryName);
-        return getAllCategory();
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        categoryService.deleteById(id);
     }
 
     @GetMapping("/{categoryName}/products")
